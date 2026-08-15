@@ -1,5 +1,5 @@
-import { type Xash3D } from 'xash3d-fwgs';
-import { type Xash3DWebRTC } from '/@/services/xash-webrtc.ts';
+import { Xash3D } from 'xash3d-fwgs';
+import { Xash3DWebRTC } from '/@/services/xash-webrtc.ts';
 import type { FilesWithPath } from '/@/utils/directory-open.ts';
 import type { ConsoleCallback, Enumify } from '/@/types.ts';
 import { unzipSync } from 'fflate';
@@ -153,29 +153,25 @@ const onBeforeUnload = (event: Event) => {
 };
 
 class XashLoader {
-  private async _getXashInstance(): Promise<
-    typeof Xash3D | typeof Xash3DWebRTC
-  > {
+  private _getXashInstance(): typeof Xash3D | typeof Xash3DWebRTC {
     const store = useXashStore();
     if (store.multiplayerIP && /\d/.test(store.multiplayerIP)) {
-      const { Xash3DWebRTC } = await import('../services/xash-webrtc.ts');
       return Xash3DWebRTC;
     } else {
-      const { Xash3D } = await import('xash3d-fwgs');
       return Xash3D;
     }
   }
 
   public async initXash(options: GameLoaderOptions): Promise<Xash3D> {
-    const Xash3D = await this._getXashInstance();
+    const XashClass = this._getXashInstance();
 
-    if (!Xash3D) {
+    if (!XashClass) {
       throw new Error('No Xash found.');
     }
 
     const store = useXashStore();
 
-    const xash = new Xash3D({
+    const xash = new XashClass({
       multiplayerIP: store.multiplayerIP,
       onError: XashLoader.removeReloadListener,
       module: {

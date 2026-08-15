@@ -6,6 +6,9 @@ import { fileURLToPath, URL } from 'node:url';
 export default defineConfig({
   base: '/',
   plugins: [vue()],
+  optimizeDeps: {
+    include: ['xash3d-fwgs', 'fflate'],
+  },
   server: {
     host: '0.0.0.0',
     port: 3000,
