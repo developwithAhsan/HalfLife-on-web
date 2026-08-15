@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/src/assets/hl-bright.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D</title>
+    
+    <!-- Primary Meta Tags -->
+    <meta name="title" content="Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D" />
+    <meta name="description" content="Play the official Half-Life: Uplink standalone demo directly in your web browser with 60+ FPS, stereo audio, and hardware-accelerated WebGL 2 graphics via WebAssembly. No downloads or installations required." />
+    <meta name="keywords" content="Half-Life in browser, play Half Life online, Half-Life Uplink, Xash3D WASM, WebAssembly FPS game, GoldSource web port, Gordon Freeman Black Mesa, browser games 3D, retro FPS online" />
+    <meta name="author" content="WebXash Community" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    <meta name="theme-color" content="#f59e0b" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D" />
+    <meta property="og:description" content="Experience Valve's iconic Half-Life: Uplink running natively in your browser with WebAssembly and WebGL 2. 60+ FPS retro FPS action with zero install." />
+    <meta property="og:image" content="/src/assets/hl-bright.svg" />
+    <meta property="og:site_name" content="WebXash Half-Life Online" />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary" />
+    <meta property="twitter:title" content="Play Half-Life: Uplink Online in Browser (WASM)" />
+    <meta property="twitter:description" content="Play the classic Half-Life: Uplink standalone campaign directly in your web browser with WebAssembly." />
+    <meta property="twitter:image" content="/src/assets/hl-bright.svg" />
+
+    <!-- Structured Data: VideoGame & FAQ Schema (JSON-LD) -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "VideoGame",
+            "name": "Half-Life: Uplink (WebAssembly Edition)",
+            "description": "Play the legendary Half-Life: Uplink campaign in any modern web browser using the Xash3D FWGS WebAssembly engine.",
+            "genre": ["First-Person Shooter", "Sci-Fi", "Action", "Horror"],
+            "gamePlatform": ["Web Browser", "PC", "Mac", "Linux", "Chromebook"],
+            "applicationCategory": "Game",
+            "operatingSystem": "Any modern web browser with WebGL 2 and WebAssembly support",
+            "author": {
+              "@type": "Organization",
+              "name": "Valve Corporation / FWGS Team"
+            },
+            "offers": {
+              "@type": "Offer",
+              "price": "0",
+              "priceCurrency": "USD",
+              "availability": "https://schema.org/InStock"
+            }
+          },
+          {
+            "@type": "Article",
+            "headline": "The Complete Guide to Half-Life: Uplink in WebAssembly - Lore, Gameplay & Engine Architecture",
+            "description": "An in-depth retrospective, technical breakdown, and gameplay walkthrough for playing Half-Life: Uplink directly inside your web browser.",
+            "author": {
+              "@type": "Organization",
+              "name": "WebXash Editorial"
+            },
+            "datePublished": "2024-01-01T00:00:00Z",
+            "dateModified": "2026-08-15T00:00:00Z"
+          },
+          {
+            "@type": "FAQPage",
+            "mainEntity": [
+              {
+                "@type": "Question",
+                "name": "How do I play Half-Life: Uplink in my web browser?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Simply click the 'Start Game' button on the main page. The game assets and WebAssembly runtime compile and load automatically in your browser with hardware WebGL 2 acceleration."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Do I need to download or install any external software or plugins?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "No downloads, installers, or browser extensions are required. The entire engine runs in standard WebAssembly supported natively by Chrome, Edge, Firefox, Safari, and Opera."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Are my game saves preserved between browser sessions?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, game progress, save states, and console configuration variables are automatically synchronized to your browser's local storage and IndexedDB virtual filesystem."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "What is the difference between Half-Life and Half-Life: Uplink?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Half-Life: Uplink is a standalone chapter released by Valve in 1999 that features distinct, original levels cut from the main Half-Life campaign, making it a unique standalone experience."
+                }
+              }
+            ]
+          }
+        ]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script type="module" src="/src/main.ts"></script>
+  </body>
+</html>
