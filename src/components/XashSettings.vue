@@ -572,38 +572,49 @@
     const thread = document.getElementById('disqus_thread');
     if (!thread) return;
 
-    (window as any).disqus_config = function (this: any) {
-      this.page.url = 'https://halflifebrowser.vercel.app/';
-      this.page.identifier = 'halflife-browser-main-discussion';
-      this.page.title = 'Play Half-Life in Browser – No Download Needed';
-    };
+    try {
+      (window as any).disqus_config = function (this: any) {
+        this.page.url = 'https://halflifebrowser.vercel.app/';
+        this.page.identifier = 'halflife-browser-main-discussion';
+        this.page.title = 'Play Half-Life in Browser – No Download Needed';
+      };
 
-    if ((window as any).DISQUS) {
-      (window as any).DISQUS.reset({
-        reload: true,
-        config: function (this: any) {
-          this.page.url = 'https://halflifebrowser.vercel.app/';
-          this.page.identifier = 'halflife-browser-main-discussion';
-          this.page.title = 'Play Half-Life in Browser – No Download Needed';
-        }
-      });
-      disqusLoaded.value = true;
-      showToast('DISQUS DISCUSSION REFRESHED');
-      return;
+      if ((window as any).DISQUS) {
+        (window as any).DISQUS.reset({
+          reload: true,
+          config: function (this: any) {
+            this.page.url = 'https://halflifebrowser.vercel.app/';
+            this.page.identifier = 'halflife-browser-main-discussion';
+            this.page.title = 'Play Half-Life in Browser – No Download Needed';
+          },
+        });
+        disqusLoaded.value = true;
+        showToast('DISQUS DISCUSSION REFRESHED');
+        return;
+      }
+
+      const existingScript = document.getElementById('disqus-embed-script');
+      if (existingScript) {
+        existingScript.remove();
+      }
+
+      const d = document;
+      const s = d.createElement('script');
+      s.id = 'disqus-embed-script';
+      s.src = 'https://halflifebrowser.disqus.com/embed.js';
+      s.async = true;
+      s.setAttribute('data-timestamp', String(+new Date()));
+      s.onload = () => {
+        disqusLoaded.value = true;
+      };
+      s.onerror = (e) => {
+        console.warn('Disqus embed could not be loaded in this context:', e);
+        disqusLoaded.value = false;
+      };
+      (d.head || d.body).appendChild(s);
+    } catch (e) {
+      console.warn('Disqus initialization skipped:', e);
     }
-
-    const existingScript = document.getElementById('disqus-embed-script');
-    if (existingScript) {
-      existingScript.remove();
-    }
-
-    const d = document, s = d.createElement('script');
-    s.id = 'disqus-embed-script';
-    s.src = 'https://halflifebrowser.disqus.com/embed.js';
-    s.setAttribute('data-timestamp', String(+new Date()));
-    (d.head || d.body).appendChild(s);
-
-    disqusLoaded.value = true;
   };
 
   let toastTimer: number | null = null;
@@ -729,10 +740,24 @@
       window.scrollTo(0, 0);
     });
 
-    // Auto-load Disqus forum
-    setTimeout(() => {
-      loadDisqus();
-    }, 400);
+    // Lazy load Disqus forum when scrolled into view
+    const commentsEl = document.getElementById('community-comments');
+    if (commentsEl && 'IntersectionObserver' in window) {
+      const observer = new IntersectionObserver(
+        (entries) => {
+          if (entries.some((e) => e.isIntersecting)) {
+            loadDisqus();
+            observer.disconnect();
+          }
+        },
+        { rootMargin: '300px' },
+      );
+      observer.observe(commentsEl);
+    } else {
+      setTimeout(() => {
+        loadDisqus();
+      }, 1000);
+    }
 
     const canvas = particleCanvas.value;
     if (!canvas) return;
