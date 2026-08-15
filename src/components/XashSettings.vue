@@ -357,78 +357,34 @@
       <section id="community-comments" class="comments-section">
         <div class="comments-header">
           <div class="section-badge">COMMUNITY DISCUSSION</div>
-          <h2 class="section-main-heading">Player Comments & Feedback</h2>
+          <h2 class="section-main-heading">Player Comments & Discussions</h2>
           <p class="section-sub-heading">
-            Share speedrun strategies, combat tactics, and feedback with fellow Black Mesa researchers.
+            Join the conversation, share speedrun secrets, tactical tips, and Half-Life feedback with fellow researchers.
           </p>
         </div>
 
         <!-- Disqus Integration Box -->
         <div class="disqus-wrapper">
-          <div class="disqus-controls-bar">
-            <div class="disqus-config-group">
-              <label for="disqus-shortname" class="disqus-label">Disqus Shortname:</label>
-              <input
-                id="disqus-shortname"
-                v-model="disqusShortname"
-                type="text"
-                class="disqus-input"
-                placeholder="e.g. webxash-community"
-              />
-              <button class="disqus-load-btn" @click="initDisqus">
-                <span>Connect / Reload Disqus</span>
-              </button>
+          <div class="disqus-top-bar">
+            <div class="disqus-meta-info">
+              <span class="disqus-channel-dot"></span>
+              <span class="disqus-channel-title">Discussion Board (halflifebrowser)</span>
             </div>
-            <span class="disqus-status-pill" :class="{ 'connected': disqusLoaded }">
-              {{ disqusLoaded ? 'Disqus Active' : 'Ready to Connect' }}
-            </span>
+            <button class="disqus-reload-btn" title="Reload Disqus Comments" @click="loadDisqus">
+              <svg class="reload-icon" viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M23 4v6h-6M1 20v-6h6"/>
+                <path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/>
+              </svg>
+              <span>Refresh Comments</span>
+            </button>
           </div>
 
           <!-- Official Disqus Thread Mount Point -->
-          <div id="disqus_thread" class="disqus-thread-container">
-            <div v-if="!disqusLoaded" class="disqus-placeholder">
-              <div class="disqus-placeholder-icon">💬</div>
-              <h4>Disqus Community Board</h4>
-              <p>Click "Connect / Reload Disqus" above to initialize threaded comments.</p>
-              <button class="primary-launch-btn-small" @click="initDisqus">
-                <span>CONNECT DISQUS FORUM</span>
-              </button>
-            </div>
-          </div>
-
-          <!-- Instant Feedback Fallback -->
-          <div class="local-comments-block">
-            <h4 class="local-comments-title">Instant Community Feed</h4>
-            <div class="comment-input-row">
-              <input
-                v-model="newCommentAuthor"
-                type="text"
-                class="comment-name-input"
-                placeholder="Your Name (e.g. Gordon Freeman)"
-              />
-              <input
-                v-model="newCommentText"
-                type="text"
-                class="comment-text-input"
-                placeholder="Share a tip or comment..."
-                @keyup.enter="postLocalComment"
-              />
-              <button class="comment-post-btn" @click="postLocalComment">
-                <span>Post</span>
-              </button>
-            </div>
-
-            <!-- List of Community Messages -->
-            <div class="comments-stream">
-              <div v-for="(comment, cIndex) in communityComments" :key="cIndex" class="comment-bubble">
-                <div class="comment-meta">
-                  <span class="comment-author">{{ comment.author }}</span>
-                  <span class="comment-time">{{ comment.time }}</span>
-                </div>
-                <p class="comment-body">{{ comment.text }}</p>
-              </div>
-            </div>
-          </div>
+          <div id="disqus_thread" class="disqus-thread-container"></div>
+          <noscript>
+            Please enable JavaScript to view the
+            <a href="https://disqus.com/?ref_noscript" target="_blank" rel="noopener noreferrer">comments powered by Disqus.</a>
+          </noscript>
         </div>
       </section>
 
@@ -609,68 +565,45 @@
     });
   };
 
-  // Disqus Integration State
-  const disqusShortname = ref('webxash-community');
+  // Disqus Integration (halflifebrowser)
   const disqusLoaded = ref(false);
 
-  const initDisqus = () => {
-    const shortname = disqusShortname.value.trim() || 'webxash-community';
-    const container = document.getElementById('disqus_thread');
-    if (!container) return;
+  const loadDisqus = () => {
+    const thread = document.getElementById('disqus_thread');
+    if (!thread) return;
 
-    const existingScript = document.getElementById('dsq-embed-scr');
+    (window as any).disqus_config = function (this: any) {
+      this.page.url = 'https://halflifebrowser.vercel.app/';
+      this.page.identifier = 'halflife-browser-main-discussion';
+      this.page.title = 'Play Half-Life in Browser – No Download Needed';
+    };
+
+    if ((window as any).DISQUS) {
+      (window as any).DISQUS.reset({
+        reload: true,
+        config: function (this: any) {
+          this.page.url = 'https://halflifebrowser.vercel.app/';
+          this.page.identifier = 'halflife-browser-main-discussion';
+          this.page.title = 'Play Half-Life in Browser – No Download Needed';
+        }
+      });
+      disqusLoaded.value = true;
+      showToast('DISQUS DISCUSSION REFRESHED');
+      return;
+    }
+
+    const existingScript = document.getElementById('disqus-embed-script');
     if (existingScript) {
       existingScript.remove();
     }
 
-    (window as any).disqus_config = function (this: any) {
-      this.page.url = window.location.href;
-      this.page.identifier = 'webxash-halflife-uplink';
-      this.page.title = 'Half-Life: Uplink WebAssembly Browser Port';
-    };
-
-    const d = document;
-    const s = d.createElement('script');
-    s.id = 'dsq-embed-scr';
-    s.src = `https://${shortname}.disqus.com/embed.js`;
+    const d = document, s = d.createElement('script');
+    s.id = 'disqus-embed-script';
+    s.src = 'https://halflifebrowser.disqus.com/embed.js';
     s.setAttribute('data-timestamp', String(+new Date()));
     (d.head || d.body).appendChild(s);
 
     disqusLoaded.value = true;
-    showToast(`CONNECTING DISQUS: ${shortname.toUpperCase()}`);
-  };
-
-  // Local Community Messages
-  const newCommentAuthor = ref('');
-  const newCommentText = ref('');
-  const communityComments = ref([
-    {
-      author: 'Gordon F.',
-      time: 'Just now',
-      text: 'The SPAS-12 double blast against Bullsquids is essential in the communications courtyard!',
-    },
-    {
-      author: 'Barney Calhoun',
-      time: '12 minutes ago',
-      text: 'Runs at solid 60 FPS on my laptop. Remember to grab the Glock ammunition in the side lab.',
-    },
-    {
-      author: 'Dr. Kleiner',
-      time: '1 hour ago',
-      text: 'Superb WebAssembly compilation. The WebGL 2 shader pipeline captures the original GoldSource atmosphere accurately.',
-    },
-  ]);
-
-  const postLocalComment = () => {
-    if (!newCommentText.value.trim()) return;
-    const author = newCommentAuthor.value.trim() || 'Anonymous Researcher';
-    communityComments.value.unshift({
-      author,
-      time: 'Just now',
-      text: newCommentText.value.trim(),
-    });
-    newCommentText.value = '';
-    showToast('COMMENT POSTED');
   };
 
   let toastTimer: number | null = null;
@@ -795,6 +728,11 @@
     requestAnimationFrame(() => {
       window.scrollTo(0, 0);
     });
+
+    // Auto-load Disqus forum
+    setTimeout(() => {
+      loadDisqus();
+    }, 400);
 
     const canvas = particleCanvas.value;
     if (!canvas) return;
@@ -1722,195 +1660,77 @@
     background: rgba(17, 24, 39, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 14px;
-    padding: 32px 30px;
+    padding: 28px 26px;
     display: flex;
     flex-direction: column;
-    gap: 22px;
+    gap: 20px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
 
-  .disqus-controls-bar {
+  .disqus-top-bar {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding-bottom: 16px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
     flex-wrap: wrap;
-    gap: 14px;
-    padding-bottom: 18px;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.06);
-  }
-
-  .disqus-config-group {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    flex-wrap: wrap;
-  }
-
-  .disqus-label {
-    font-size: 13px;
-    font-weight: 600;
-    color: #cbd5e1;
-  }
-
-  .disqus-input {
-    padding: 8px 14px;
-    background: #0f172a;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 13px;
-  }
-
-  .disqus-load-btn {
-    padding: 8px 16px;
-    background: #334155;
-    color: #ffffff;
-    border: 1px solid #475569;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .disqus-load-btn:hover {
-    background: #475569;
-  }
-
-  .disqus-status-pill {
-    font-size: 11.5px;
-    font-weight: 700;
-    padding: 4px 10px;
-    border-radius: 6px;
-    background: #1e293b;
-    color: #94a3b8;
-  }
-
-  .disqus-status-pill.connected {
-    background: rgba(16, 185, 129, 0.15);
-    color: #10b981;
-    border: 1px solid rgba(16, 185, 129, 0.3);
-  }
-
-  .disqus-placeholder {
-    text-align: center;
-    padding: 36px 20px;
-    background: rgba(0, 0, 0, 0.25);
-    border: 1px dashed rgba(255, 255, 255, 0.12);
-    border-radius: 10px;
-  }
-
-  .disqus-placeholder-icon {
-    font-size: 32px;
-    margin-bottom: 8px;
-  }
-
-  .disqus-placeholder h4 {
-    margin: 0 0 6px 0;
-    font-size: 16px;
-    color: #ffffff;
-  }
-
-  .disqus-placeholder p {
-    margin: 0;
-    font-size: 13.5px;
-    color: #94a3b8;
-  }
-
-  /* Local Comments Feed */
-  .local-comments-block {
-    background: rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-    padding: 22px;
-  }
-
-  .local-comments-title {
-    margin: 0 0 14px 0;
-    font-size: 13.5px;
-    font-weight: 700;
-    color: #f59e0b;
-    letter-spacing: 0.04em;
-  }
-
-  .comment-input-row {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 18px;
-    flex-wrap: wrap;
-  }
-
-  .comment-name-input {
-    width: 200px;
-    padding: 10px 14px;
-    background: #111827;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 13px;
-  }
-
-  .comment-text-input {
-    flex: 1;
-    min-width: 240px;
-    padding: 10px 14px;
-    background: #111827;
-    border: 1px solid #334155;
-    border-radius: 6px;
-    color: #ffffff;
-    font-size: 13px;
-  }
-
-  .comment-post-btn {
-    padding: 10px 20px;
-    background: #f59e0b;
-    color: #0f172a;
-    border: none;
-    border-radius: 6px;
-    font-size: 13px;
-    font-weight: 700;
-    cursor: pointer;
-    transition: all 0.15s ease;
-  }
-
-  .comment-post-btn:hover {
-    background: #fbbf24;
-  }
-
-  .comments-stream {
-    display: flex;
-    flex-direction: column;
     gap: 12px;
   }
 
-  .comment-bubble {
-    background: #111827;
-    border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 8px;
-    padding: 12px 16px;
-  }
-
-  .comment-meta {
+  .disqus-meta-info {
     display: flex;
     align-items: center;
-    gap: 10px;
-    margin-bottom: 4px;
+    gap: 8px;
   }
 
-  .comment-author {
+  .disqus-channel-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #10b981;
+    box-shadow: 0 0 8px rgba(16, 185, 129, 0.6);
+  }
+
+  .disqus-channel-title {
     font-size: 13px;
     font-weight: 700;
-    color: #ffffff;
+    color: #e2e8f0;
+    letter-spacing: 0.03em;
   }
 
-  .comment-time {
-    font-size: 11.5px;
-    color: #64748b;
-  }
-
-  .comment-body {
-    margin: 0;
-    font-size: 13.5px;
+  .disqus-reload-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    padding: 7px 14px;
+    background: rgba(255, 255, 255, 0.06);
+    border: 1px solid rgba(255, 255, 255, 0.12);
+    border-radius: 6px;
     color: #cbd5e1;
-    line-height: 1.5;
+    font-size: 12.5px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .disqus-reload-btn:hover {
+    background: rgba(245, 158, 11, 0.15);
+    border-color: rgba(245, 158, 11, 0.4);
+    color: #f59e0b;
+  }
+
+  .reload-icon {
+    transition: transform 0.3s ease;
+  }
+
+  .disqus-reload-btn:hover .reload-icon {
+    transform: rotate(180deg);
+  }
+
+  .disqus-thread-container {
+    min-height: 240px;
+    width: 100%;
+    color: #e2e8f0;
   }
 
   /* FOOTER */

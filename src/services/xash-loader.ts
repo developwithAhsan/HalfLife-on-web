@@ -181,34 +181,38 @@ class XashLoader {
       module: {
         arguments: options.launchArgs,
         locateFile: (path: string) => {
-          console.log(path);
-          switch (path) {
-            case 'xash.wasm':
-              return xashURL;
-            case 'filesystem_stdio.wasm':
-              return filesystemURL;
-            case 'cl_dlls/menu_emscripten_wasm32.wasm':
-              return menuURL;
-            case 'dlls/hl_emscripten_wasm32.wasm':
-              return HLServerURL;
-            // bshift fix
-            case 'dlls/bshift_emscripten_wasm32.wasm':
-              return HLServerURL;
-            //opfor fix
-            case 'dlls/opfor_emscripten_wasm32.wasm':
-              return HLServerURL;
-            case 'cl_dlls/client_emscripten_wasm32.wasm':
-              return HLClientURL;
-            // cs
-            case 'dlls/cs_emscripten_wasm32.wasm':
-              return CSServerURL;
-            case 'dlls/mp_emscripten_wasm32.wasm':
-              return CSServerURL;
-            case 'libref_webgl2.wasm':
-              return webgl2URL;
-            // Check this (not supported yet)
-            case 'libvgui_support.wasm':
-              return menuURL;
+          const cleanPath = path.replace(/^(\.\/|\/)/, '');
+          if (cleanPath === 'xash.wasm' || cleanPath.endsWith('/xash.wasm')) {
+            return xashURL;
+          }
+          if (cleanPath === 'filesystem_stdio.wasm' || cleanPath.endsWith('/filesystem_stdio.wasm')) {
+            return filesystemURL;
+          }
+          if (
+            cleanPath === 'libmenu.wasm' ||
+            cleanPath.includes('menu') ||
+            cleanPath.endsWith('menu_emscripten_wasm32.wasm')
+          ) {
+            return menuURL;
+          }
+          if (cleanPath.includes('client_emscripten_wasm32.wasm')) {
+            return HLClientURL;
+          }
+          if (cleanPath.includes('cs_emscripten_wasm32.wasm') || cleanPath.includes('mp_emscripten_wasm32.wasm')) {
+            return CSServerURL;
+          }
+          if (
+            cleanPath.includes('hl_emscripten_wasm32.wasm') ||
+            cleanPath.includes('bshift') ||
+            cleanPath.includes('opfor')
+          ) {
+            return HLServerURL;
+          }
+          if (cleanPath.includes('libref_webgl2.wasm') || cleanPath.includes('libref_gles3compat.wasm')) {
+            return webgl2URL;
+          }
+          if (cleanPath.includes('extras.pk3')) {
+            return extrasURL;
           }
           return path;
         },
@@ -349,11 +353,29 @@ class XashLoader {
   }
 
   public async fetchExtras(): Promise<ArrayBuffer> {
-    const response = await fetch(extrasURL);
-    if (!response.ok) {
-      throw new Error(`Failed to fetch extras.pk3: ${response.statusText}`);
+    const candidateUrls = [
+      extrasURL,
+      '/xash3d-fwgs/valve/extras.pk3',
+      './xash3d-fwgs/valve/extras.pk3',
+      '/valve/extras.pk3',
+      'https://raw.githubusercontent.com/yohimik/webxash3d-fwgs/master/dist/valve/extras.pk3',
+    ];
+
+    let lastError: any = null;
+    for (const url of candidateUrls) {
+      try {
+        const response = await fetch(url);
+        if (response.ok) {
+          const buffer = await response.arrayBuffer();
+          if (buffer && buffer.byteLength > 0) {
+            return buffer;
+          }
+        }
+      } catch (err) {
+        lastError = err;
+      }
     }
-    return await response.arrayBuffer();
+    throw new Error(`Failed to fetch extras.pk3: ${lastError?.message || 'all sources failed'}`);
   }
 
   public async writeExtras(

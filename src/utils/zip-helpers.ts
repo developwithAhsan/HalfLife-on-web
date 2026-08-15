@@ -5,6 +5,54 @@ const isZipBuffer = (buffer: ArrayBuffer): boolean => {
   return bytes[0] === 0x50 && bytes[1] === 0x4b;
 };
 
+const fetchZipWithFetch = async (
+  url: string,
+  progressCallback?: (progress: number) => any,
+): Promise<ArrayBuffer> => {
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`HTTP error ${res.status} from ${url}`);
+  }
+
+  const contentLength = res.headers.get('content-length');
+  const total = contentLength ? parseInt(contentLength, 10) : 0;
+
+  if (res.body && total > 0 && typeof ReadableStream !== 'undefined') {
+    const reader = res.body.getReader();
+    let received = 0;
+    const chunks: Uint8Array[] = [];
+
+    while (true) {
+      const { done, value } = await reader.read();
+      if (done) break;
+      if (value) {
+        chunks.push(value);
+        received += value.length;
+        if (progressCallback && total > 0) {
+          progressCallback(Math.round((received / total) * 100));
+        }
+      }
+    }
+
+    const allBytes = new Uint8Array(received);
+    let position = 0;
+    for (const chunk of chunks) {
+      allBytes.set(chunk, position);
+      position += chunk.length;
+    }
+
+    if (isZipBuffer(allBytes.buffer)) {
+      return allBytes.buffer;
+    }
+  }
+
+  const buffer = await res.arrayBuffer();
+  if (isZipBuffer(buffer)) {
+    return buffer;
+  }
+  throw new Error(`Response from ${url} is not a valid zip buffer`);
+};
+
 const fetchZipWithXhr = (
   url: string,
   progressCallback?: (progress: number) => any,
@@ -44,8 +92,10 @@ const getZip = async (
   progressCallback: (progress: number) => any,
 ): Promise<ArrayBuffer> => {
   const cleanPath = zipPath.replace(/^\.?\//, '').replace(/\/$/, '');
+  const origin = typeof window !== 'undefined' ? window.location.origin : '';
   const candidateUrls = [
     `/${cleanPath}/${zipName}`,
+    `${origin}/${cleanPath}/${zipName}`,
     `./${cleanPath}/${zipName}`,
     `https://x8bitrain.github.io/webXash/${cleanPath}/${zipName}`,
     `https://raw.githubusercontent.com/x8BitRain/webXash/gh-pages/${cleanPath}/${zipName}`,
@@ -60,8 +110,15 @@ const getZip = async (
         return buffer;
       }
     } catch (err) {
-      lastError = err;
-      console.warn(`Could not load zip from candidate URL: ${url}`, err);
+      try {
+        const buffer = await fetchZipWithFetch(url, progressCallback);
+        if (buffer && isZipBuffer(buffer)) {
+          return buffer;
+        }
+      } catch (fetchErr) {
+        lastError = fetchErr || err;
+        console.warn(`Could not load zip from candidate URL: ${url}`, fetchErr || err);
+      }
     }
   }
 
