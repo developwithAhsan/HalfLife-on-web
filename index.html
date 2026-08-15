@@ -4,45 +4,65 @@
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/src/assets/hl-bright.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D</title>
+    <title>Play Half-Life in Browser – No Download Needed</title>
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href="https://halflifebrowser.vercel.app" />
+
+    <!-- Google Fonts: Plus Jakarta Sans for crisp editorial body & headings, JetBrains Mono for kbd/code -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
     
     <!-- Primary Meta Tags -->
-    <meta name="title" content="Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D" />
-    <meta name="description" content="Play the official Half-Life: Uplink standalone demo directly in your web browser with 60+ FPS, stereo audio, and hardware-accelerated WebGL 2 graphics via WebAssembly. No downloads or installations required." />
-    <meta name="keywords" content="Half-Life in browser, play Half Life online, Half-Life Uplink, Xash3D WASM, WebAssembly FPS game, GoldSource web port, Gordon Freeman Black Mesa, browser games 3D, retro FPS online" />
-    <meta name="author" content="WebXash Community" />
+    <meta name="title" content="Play Half-Life in Browser – No Download Needed" />
+    <meta name="description" content="Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now." />
+    <meta name="keywords" content="half life online, half life browser game, half life multiplayer, play half life in browser, play half life online browser, half life game in browser, half life 1 online browser, half life 2 online browser, half life in browser download, how to play half life in browser, how to play half life 2 in browser, how to play half life online with friends, can you play half life in browser, half life online emulator, half life browser emulator, half life 1 online android, half life online apk, half life online free, half life browser free, half life full game browser" />
+    <meta name="author" content="Half-Life Browser Community" />
     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
     <meta name="theme-color" content="#f59e0b" />
 
     <!-- Open Graph / Facebook -->
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Play Half-Life: Uplink Online in Browser (WASM) - WebXash 3D" />
-    <meta property="og:description" content="Experience Valve's iconic Half-Life: Uplink running natively in your browser with WebAssembly and WebGL 2. 60+ FPS retro FPS action with zero install." />
-    <meta property="og:image" content="/src/assets/hl-bright.svg" />
-    <meta property="og:site_name" content="WebXash Half-Life Online" />
+    <meta property="og:url" content="https://halflifebrowser.vercel.app" />
+    <meta property="og:title" content="Play Half-Life in Browser – No Download Needed" />
+    <meta property="og:description" content="Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now." />
+    <meta property="og:image" content="https://halflifebrowser.vercel.app/src/assets/hl-bright.svg" />
+    <meta property="og:site_name" content="Play Half-Life in Browser" />
 
     <!-- Twitter -->
-    <meta property="twitter:card" content="summary" />
-    <meta property="twitter:title" content="Play Half-Life: Uplink Online in Browser (WASM)" />
-    <meta property="twitter:description" content="Play the classic Half-Life: Uplink standalone campaign directly in your web browser with WebAssembly." />
-    <meta property="twitter:image" content="/src/assets/hl-bright.svg" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://halflifebrowser.vercel.app" />
+    <meta property="twitter:title" content="Play Half-Life in Browser – No Download Needed" />
+    <meta property="twitter:description" content="Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now." />
+    <meta property="twitter:image" content="https://halflifebrowser.vercel.app/src/assets/hl-bright.svg" />
 
-    <!-- Structured Data: VideoGame & FAQ Schema (JSON-LD) -->
+    <!-- Structured Data: WebSite, VideoGame, HowTo & FAQ Schema (JSON-LD) -->
     <script type="application/ld+json">
       {
         "@context": "https://schema.org",
         "@graph": [
           {
+            "@type": "WebSite",
+            "@id": "https://halflifebrowser.vercel.app/#website",
+            "url": "https://halflifebrowser.vercel.app",
+            "name": "Play Half-Life in Browser – No Download Needed",
+            "description": "Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now.",
+            "inLanguage": "en-US"
+          },
+          {
             "@type": "VideoGame",
-            "name": "Half-Life: Uplink (WebAssembly Edition)",
-            "description": "Play the legendary Half-Life: Uplink campaign in any modern web browser using the Xash3D FWGS WebAssembly engine.",
+            "@id": "https://halflifebrowser.vercel.app/#game",
+            "name": "Half-Life (Browser WebAssembly Edition)",
+            "alternateName": ["Half-Life 1 Online Browser", "Half-Life Web Emulator", "Half-Life Uplink WASM"],
+            "description": "Play the original Half-Life and Uplink campaign instantly in your web browser with 60+ FPS, stereo 3D audio, and WebGL 2 hardware acceleration without any installation or Steam required.",
             "genre": ["First-Person Shooter", "Sci-Fi", "Action", "Horror"],
-            "gamePlatform": ["Web Browser", "PC", "Mac", "Linux", "Chromebook"],
+            "gamePlatform": ["Web Browser", "PC", "Mac", "Linux", "Chromebook", "Android Browser"],
             "applicationCategory": "Game",
-            "operatingSystem": "Any modern web browser with WebGL 2 and WebAssembly support",
+            "operatingSystem": "Any modern web browser with WebGL 2.0 and WebAssembly support",
             "author": {
               "@type": "Organization",
-              "name": "Valve Corporation / FWGS Team"
+              "name": "Valve Corporation / Xash3D FWGS Open Source Team"
             },
             "offers": {
               "@type": "Offer",
@@ -52,49 +72,68 @@
             }
           },
           {
-            "@type": "Article",
-            "headline": "The Complete Guide to Half-Life: Uplink in WebAssembly - Lore, Gameplay & Engine Architecture",
-            "description": "An in-depth retrospective, technical breakdown, and gameplay walkthrough for playing Half-Life: Uplink directly inside your web browser.",
-            "author": {
-              "@type": "Organization",
-              "name": "WebXash Editorial"
-            },
-            "datePublished": "2024-01-01T00:00:00Z",
-            "dateModified": "2026-08-15T00:00:00Z"
+            "@type": "HowTo",
+            "name": "How to Play Half-Life in Browser (No Download Needed)",
+            "description": "Step-by-step guide to launch and play Half-Life 1 online directly in any web browser without downloading or installing Steam.",
+            "step": [
+              {
+                "@type": "HowToStep",
+                "name": "Open the Half-Life Browser Webpage",
+                "text": "Navigate to https://halflifebrowser.vercel.app on Google Chrome, Firefox, Safari, Edge, or Android browser."
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Click Launch Game",
+                "text": "Click the 'START GAME' or 'LAUNCH GAME NOW' button. The WebAssembly engine compiles and initialises directly inside browser memory."
+              },
+              {
+                "@type": "HowToStep",
+                "name": "Enable Mouse Look & Controls",
+                "text": "Click on the game screen to lock your mouse pointer. Use WASD keys to move, mouse to aim, and Left Click to fire."
+              }
+            ]
           },
           {
             "@type": "FAQPage",
             "mainEntity": [
               {
                 "@type": "Question",
-                "name": "How do I play Half-Life: Uplink in my web browser?",
+                "name": "Can you play Half-Life in a web browser?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Simply click the 'Start Game' button on the main page. The game assets and WebAssembly runtime compile and load automatically in your browser with hardware WebGL 2 acceleration."
+                  "text": "Yes! With modern WebAssembly (WASM) and WebGL 2 technology powered by the Xash3D FWGS engine, you can play the original Half-Life 1 and Uplink directly in your web browser with 60+ FPS performance, zero installation, and no Steam required."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Do I need to download or install any external software or plugins?",
+                "name": "How to play Half-Life in browser without download?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "No downloads, installers, or browser extensions are required. The entire engine runs in standard WebAssembly supported natively by Chrome, Edge, Firefox, Safari, and Opera."
+                  "text": "Simply click the 'START GAME' button at https://halflifebrowser.vercel.app. The engine assets load straight into browser RAM through WebAssembly, allowing instant free online play."
                 }
               },
               {
                 "@type": "Question",
-                "name": "Are my game saves preserved between browser sessions?",
+                "name": "How to play Half-Life online with friends / multiplayer?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Yes, game progress, save states, and console configuration variables are automatically synchronized to your browser's local storage and IndexedDB virtual filesystem."
+                  "text": "WebXash supports GoldSource multiplayer networking protocols via WebSockets. Players can join multiplayer deathmatch servers by opening the in-game console (~) and typing 'connect <server_ip_or_ws>' or hosting a local LAN session."
                 }
               },
               {
                 "@type": "Question",
-                "name": "What is the difference between Half-Life and Half-Life: Uplink?",
+                "name": "How to play Half-Life 2 in browser or Android APK?",
                 "acceptedAnswer": {
                   "@type": "Answer",
-                  "text": "Half-Life: Uplink is a standalone chapter released by Valve in 1999 that features distinct, original levels cut from the main Half-Life campaign, making it a unique standalone experience."
+                  "text": "While Half-Life 1 and Uplink run seamlessly in WebAssembly via Xash3D, Half-Life 2 uses the Source Engine. For Android users, Source Engine ports and Xash3D APKs allow running full games locally, while WebXash handles GoldSource games directly in the browser without an APK."
+                }
+              },
+              {
+                "@type": "Question",
+                "name": "Is Half-Life browser emulator free to play?",
+                "acceptedAnswer": {
+                  "@type": "Answer",
+                  "text": "Yes, playing Half-Life: Uplink online through this WebAssembly browser emulator is 100% free with no hidden charges, downloads, or sign-ups required."
                 }
               }
             ]

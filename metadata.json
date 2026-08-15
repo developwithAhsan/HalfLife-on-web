@@ -1,6 +1,6 @@
 {
   "name": "WebXash",
-  "description": "Play Half-Life: Uplink online in your browser powered by WebAssembly, WebGL 2, and Xash3D FWGS engine. Includes comprehensive game guide, FAQ, and Disqus comments.",
+  "description": "Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

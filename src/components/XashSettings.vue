@@ -1,13 +1,14 @@
 <template>
-  <div class="page-container">
-    <!-- Ambient particle background -->
+  <div id="home" class="page-container">
+    <!-- Ambient ambient glow grid & particles -->
+    <div class="ambient-glow"></div>
     <canvas ref="particleCanvas" class="particles-canvas"></canvas>
 
     <!-- Top Sticky Navigation Bar -->
     <header class="top-nav">
       <div class="nav-inner">
         <!-- Brand Logo -->
-        <a href="#game-launcher" class="nav-brand">
+        <a href="#home" class="nav-brand" @click.prevent="scrollToTop">
           <div class="nav-lambda-glyph">λ</div>
           <div class="nav-brand-text">
             <span class="nav-title">WEBXASH</span>
@@ -16,12 +17,13 @@
         </a>
 
         <!-- Main Navigation Links -->
-        <nav class="nav-links">
+        <nav class="nav-links" aria-label="Main Navigation">
+          <a href="#home" class="nav-link" @click.prevent="scrollToTop">Home</a>
           <a href="#game-launcher" class="nav-link">Play</a>
           <a href="#article-guide" class="nav-link">Guide</a>
           <a href="#weapons-guide" class="nav-link">Weapons</a>
           <a href="#faq-section" class="nav-link">FAQ</a>
-          <a href="#community-comments" class="nav-link">Comments</a>
+          <a href="#community-comments" class="nav-link">Community</a>
         </nav>
 
         <!-- Header Action Buttons -->
@@ -62,19 +64,20 @@
             <div class="header-text">
               <div class="status-indicator">
                 <span class="status-dot"></span>
-                <span class="status-text">WEBASSEMBLY 64-BIT ENGINE READY</span>
+                <span class="status-text">WEBASSEMBLY 64-BIT EMULATOR READY</span>
               </div>
-              <h1 class="game-title">HALF-LIFE: UPLINK</h1>
-              <p class="game-subtitle">Official Standalone Black Mesa Chapter in Your Browser</p>
+              <h1 class="game-title">Play Half-Life in Browser – No Download Needed</h1>
+              <p class="game-subtitle">Play the original Half-Life instantly in your browser. No install, no Steam required — just click and play free online right now.</p>
             </div>
           </div>
 
-          <!-- Feature Badges -->
+          <!-- Feature Highlights Row -->
           <div class="tags-row">
-            <span class="tag-pill">WebGL 2.0 Shaders</span>
-            <span class="tag-pill">60+ FPS Native</span>
-            <span class="tag-pill">Stereo 3D Audio</span>
-            <span class="tag-pill">Local Save Persistence</span>
+            <span class="tag-pill">Play Free Online</span>
+            <span class="tag-pill">No Download Required</span>
+            <span class="tag-pill">WebGL 2.0 60+ FPS</span>
+            <span class="tag-pill">Multiplayer Ready</span>
+            <span class="tag-pill">Android & Desktop Browser</span>
           </div>
 
           <!-- Primary Launch CTA -->
@@ -82,28 +85,52 @@
             <svg class="play-icon" viewBox="0 0 24 24" fill="currentColor">
               <path d="M8 5v14l11-7z"/>
             </svg>
-            <span>LAUNCH GAME NOW</span>
+            <span>LAUNCH HALF-LIFE NOW — FREE</span>
           </button>
 
-          <!-- Controls Grid -->
+          <!-- Keybindings & Controls Box -->
           <div class="controls-box">
             <div class="controls-header">
               <span class="controls-title">DEFAULT CONTROLS</span>
               <span class="controls-hint">POINTER LOCK SUPPORTED</span>
             </div>
             <div class="controls-grid">
-              <div class="control-item"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd><span>Move</span></div>
-              <div class="control-item"><kbd>Mouse</kbd><span>Aim / Look</span></div>
-              <div class="control-item"><kbd>L-Click</kbd><span>Primary Fire</span></div>
-              <div class="control-item"><kbd>R-Click</kbd><span>Secondary Fire</span></div>
-              <div class="control-item"><kbd>E</kbd><span>Interact / Open</span></div>
-              <div class="control-item"><kbd>Space</kbd><span>Jump</span></div>
-              <div class="control-item"><kbd>Ctrl</kbd><span>Crouch</span></div>
-              <div class="control-item"><kbd>R</kbd><span>Reload Weapon</span></div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>W</kbd><kbd>A</kbd><kbd>S</kbd><kbd>D</kbd></div>
+                <span class="control-label">Move</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>Mouse</kbd></div>
+                <span class="control-label">Aim / Look</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>L-Click</kbd></div>
+                <span class="control-label">Primary Fire</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>R-Click</kbd></div>
+                <span class="control-label">Secondary Fire</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>E</kbd></div>
+                <span class="control-label">Interact / Use</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>Space</kbd></div>
+                <span class="control-label">Jump</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>Ctrl</kbd></div>
+                <span class="control-label">Crouch</span>
+              </div>
+              <div class="control-item">
+                <div class="kbd-cluster"><kbd>R</kbd></div>
+                <span class="control-label">Reload Weapon</span>
+              </div>
             </div>
           </div>
 
-          <!-- Utility Actions -->
+          <!-- Utility Actions (Fullscreen & Share) -->
           <div class="actions-row">
             <button class="ghost-btn" title="Toggle Fullscreen Mode" @click="toggleFullscreen">
               <svg class="btn-icon-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -124,67 +151,83 @@
       <!-- SEO ARTICLE & GAME GUIDE -->
       <article id="article-guide" class="seo-article">
         <header class="article-header">
-          <div class="article-meta-badge">COMPREHENSIVE RETROSPECTIVE & ENGINE GUIDE</div>
+          <div class="article-meta-badge">OFFICIAL BROWSER PORT & GAMEPLAY GUIDE</div>
           <h2 class="article-main-title">
-            Half-Life: Uplink in WebAssembly — History, Gameplay Mechanics & WebGL Architecture
+            How to Play Half-Life in Browser — Free Online WebAssembly Emulator & Complete Guide
           </h2>
           <p class="article-lead">
-            An in-depth look into Valve’s legendary 1999 standalone demo and how modern WebAssembly and Xash3D FWGS deliver the complete GoldSource experience directly inside the browser.
+            Experience the original Half-Life 1 and Uplink campaign directly inside your web browser. No download, no Steam installation, and no complex setup required — powered by WebAssembly (WASM), WebGL 2, and the open-source Xash3D GoldSource engine.
           </p>
         </header>
 
-        <!-- Chapter 1: Storyline and Setting -->
+        <!-- Chapter 1: How to Play Half-Life in Browser -->
         <section class="article-section">
-          <h3 class="section-title">1. The Black Mesa Incident & The Story of Uplink</h3>
+          <h3 class="section-title">1. How to Play Half-Life in Browser (Instant No-Download Play)</h3>
           <p>
-            Released on February 12, 1999, <strong>Half-Life: Uplink</strong> is a standalone demo and self-contained chapter created by Valve Corporation. Unlike conventional demos that simply replay the opening chapters of the retail release, <em>Uplink</em> features distinct map layouts and scenarios originally developed and cut from the full <em>Half-Life</em> campaign.
+            Wondering <strong>how to play Half-Life in browser</strong> without downloading gigabytes of game files or configuring third-party emulators? <strong>WebXash</strong> compiles the full 3D GoldSource engine into WebAssembly bytecode, executing natively inside any modern browser.
           </p>
           <p>
-            Set approximately 48 hours following the disastrous Resonance Cascade within the subterranean <strong>Black Mesa Research Facility</strong>, players assume the role of Dr. Gordon Freeman. Encased in the Mark IV Hazardous Environment Suit (HEV), Freeman must navigate compromised containment sectors, align an omnidirectional transmitter dish, and broadcast a vital distress message to the surface Lambda team.
+            To begin playing:
           </p>
+          <ol class="steps-list">
+            <li><strong>Click Launch:</strong> Hit the <em>"START GAME"</em> or <em>"LAUNCH HALF-LIFE NOW"</em> button at the top of the page.</li>
+            <li><strong>Instant WASM Compilation:</strong> The browser downloads the game assets directly into memory with zero disk installation.</li>
+            <li><strong>Capture Pointer & Play:</strong> Click the game window to lock your mouse cursor for authentic 360-degree free-look controls.</li>
+          </ol>
           <div class="callout-box">
-            <div class="callout-icon">💡</div>
+            <div class="callout-icon">⚡</div>
             <div class="callout-text">
-              <strong>Narrative Placement:</strong> Chronologically situated between the main campaign chapters <em>"Forget About Freeman!"</em> and <em>"Lambda Core"</em>, Uplink tests players against intense combined encounters involving Hazardous Environment Combat Unit (HECU) Marines, Headcrabs, Houndeyes, and Vortigaunts.
+              <strong>Zero Download & Free Online:</strong> Unlike traditional PC gaming that demands client installs and Steam authentication, you can enjoy <strong>Half-Life online free</strong> straight from Chrome, Firefox, Safari, Edge, or Android mobile browsers.
             </div>
           </div>
         </section>
 
-        <!-- Chapter 2: Technical Architecture -->
+        <!-- Chapter 2: The Black Mesa Story & Uplink Chapter -->
         <section class="article-section">
-          <h3 class="section-title">2. WebAssembly (WASM) & WebGL 2 Engine Architecture</h3>
+          <h3 class="section-title">2. The Black Mesa Incident & The Story of Uplink</h3>
           <p>
-            Executing a full 3D C/C++ engine inside a modern browser environment is made possible through <strong>Xash3D FWGS</strong>, an open-source GoldSource-compatible engine compiled to <strong>WebAssembly (WASM)</strong> using the Emscripten toolchain.
+            Set within the subterranean depths of the <strong>Black Mesa Research Facility</strong> in New Mexico, players step into the hazardous environment suit of Dr. Gordon Freeman. In <em>Half-Life: Uplink</em>, you are tasked with navigating hostile containment sectors, dispatching alien incursions, and aligning a communication transmitter to broadcast a vital distress message to surface scientists.
+          </p>
+          <p>
+            Featuring distinct combat encounters and original puzzle layouts, Uplink pits you against the Hazardous Environment Combat Unit (HECU), Headcrabs, Houndeyes, and Vortigaunts in pulse-pounding retro FPS action.
+          </p>
+        </section>
+
+        <!-- Chapter 3: Half-Life Multiplayer & Playing with Friends -->
+        <section class="article-section">
+          <h3 class="section-title">3. Half-Life Multiplayer: Playing Online with Friends</h3>
+          <p>
+            Interested in <strong>Half-Life multiplayer</strong> in a browser game environment? The WebXash engine includes integrated network protocols compatible with WebSocket proxies. Players can open the in-game developer console by pressing <kbd>~</kbd> (Tilde) and connect to dedicated GoldSource deathmatch and team-play servers.
           </p>
           <div class="tech-grid">
             <div class="tech-card">
-              <div class="tech-icon">⚡</div>
-              <h4>Near-Native WASM Execution</h4>
-              <p>Engine physics, entity logic, and artificial intelligence routines compile directly into optimized WebAssembly bytecode.</p>
+              <div class="tech-icon">🌐</div>
+              <h4>WebSocket Multiplayer</h4>
+              <p>Connect to multiplayer deathmatch servers with low-latency browser socket networking.</p>
             </div>
             <div class="tech-card">
-              <div class="tech-icon">🎮</div>
-              <h4>Hardware WebGL 2 Pipeline</h4>
-              <p>Hardware-accelerated dynamic lightmaps, animated studio meshes, and BSP geometry rendered directly onto HTML5 Canvas.</p>
+              <div class="tech-icon">📱</div>
+              <h4>Half-Life 1 Online Android & APK</h4>
+              <p>Supports mobile touch controls and Android browser execution without needing a separate APK file.</p>
+            </div>
+            <div class="tech-card">
+              <div class="tech-icon">⚡</div>
+              <h4>Half-Life Online Emulator</h4>
+              <p>Pure C/C++ GoldSource code compiled to 64-bit WASM with full 60+ FPS hardware acceleration.</p>
             </div>
             <div class="tech-card">
               <div class="tech-icon">💾</div>
-              <h4>IndexedDB Virtual Filesystem</h4>
-              <p>Game saves, custom keybinds, and console configuration files are preserved persistently in client-side storage.</p>
-            </div>
-            <div class="tech-card">
-              <div class="tech-icon">🔊</div>
-              <h4>Spatial Web Audio</h4>
-              <p>Positional 3D audio cues, reverberation, and voice line streaming delivered with low latency via the Web Audio API.</p>
+              <h4>IndexedDB Save Persistence</h4>
+              <p>Save games and custom binds are safely retained in browser storage between play sessions.</p>
             </div>
           </div>
         </section>
 
-        <!-- Chapter 3: Weapons Guide -->
+        <!-- Chapter 4: Weapons Guide -->
         <section id="weapons-guide" class="article-section">
-          <h3 class="section-title">3. Weapons Arsenal & Combat Strategy</h3>
+          <h3 class="section-title">4. Weapons Arsenal & Combat Strategy</h3>
           <p>
-            Overcoming hostile forces in Black Mesa requires strategic resource management and familiarity with Dr. Freeman’s arsenal:
+            Surviving the Black Mesa outbreak requires tactical weapon mastery:
           </p>
 
           <div class="table-container">
@@ -239,33 +282,16 @@
           </div>
         </section>
 
-        <!-- Chapter 4: System Requirements & Compatibility -->
+        <!-- Chapter 5: Half-Life 1 vs Half-Life 2 in Browser -->
         <section class="article-section">
-          <h3 class="section-title">4. System Requirements & Browser Compatibility</h3>
+          <h3 class="section-title">5. Half-Life 1 Online Browser vs Half-Life 2 in Browser</h3>
           <p>
-            WebXash Half-Life operates smoothly across modern operating systems and web browsers without third-party plugins.
+            Players frequently ask about playing both <strong>Half-Life 1 online browser</strong> and <strong>Half-Life 2 in browser</strong>:
           </p>
-          <div class="specs-grid">
-            <div class="specs-col">
-              <h4 class="specs-heading">Minimum Requirements</h4>
-              <ul class="specs-list">
-                <li><strong>Operating System:</strong> Windows 10/11, macOS 10.15+, Linux, ChromeOS</li>
-                <li><strong>Browser:</strong> Google Chrome 90+, Mozilla Firefox 88+, Microsoft Edge 90+, Apple Safari 15+</li>
-                <li><strong>CPU:</strong> Dual-Core 1.8 GHz or equivalent modern processor</li>
-                <li><strong>Memory:</strong> 2 GB RAM available</li>
-                <li><strong>Graphics:</strong> WebGL 2.0 compatible integrated or dedicated GPU</li>
-              </ul>
-            </div>
-            <div class="specs-col">
-              <h4 class="specs-heading">Recommended Setup</h4>
-              <ul class="specs-list">
-                <li><strong>Display:</strong> 1080p 60Hz+ with Fullscreen enabled</li>
-                <li><strong>Controls:</strong> Hardware Keyboard & Mouse with Pointer Lock</li>
-                <li><strong>Audio:</strong> Stereo Headphones for spatial enemy awareness</li>
-                <li><strong>Storage:</strong> Standard browser cache enabled for offline game assets</li>
-              </ul>
-            </div>
-          </div>
+          <ul class="specs-list">
+            <li><strong>Half-Life 1 (GoldSource Engine):</strong> Runs 100% natively in WebAssembly through WebXash with zero downloads or plugins on all desktop and mobile browsers.</li>
+            <li><strong>Half-Life 2 (Source Engine):</strong> Because Half-Life 2 uses the more resource-heavy Source Engine with complex Havok physics, it typically requires local client execution or specialized cloud streaming, while Half-Life 1 runs instantly in standard browser RAM.</li>
+          </ul>
         </section>
       </article>
 
@@ -411,19 +437,21 @@
         <div class="footer-content">
           <div class="footer-brand">
             <span class="footer-lambda">λ</span>
-            <span>WEBXASH // GOLDSURCE WASM ENGINE</span>
+            <span>WEBXASH // GOLDSRC WASM ENGINE</span>
           </div>
           <p class="footer-disclaimer">
-            Half-Life is a registered trademark of Valve Corporation. This project is a community-driven WebAssembly port powered by the open-source Xash3D FWGS engine.
+            Half-Life is a registered trademark of Valve Corporation. This project is an educational and community-driven WebAssembly port powered by the open-source Xash3D FWGS engine.
           </p>
           <div class="footer-links">
+            <a href="#home" @click.prevent="scrollToTop">Home</a>
+            <span>•</span>
             <a href="#game-launcher">Play Game</a>
             <span>•</span>
             <a href="#article-guide">Game Lore</a>
             <span>•</span>
             <a href="#faq-section">FAQ</a>
             <span>•</span>
-            <a href="#community-comments">Disqus Comments</a>
+            <a href="#community-comments">Community</a>
           </div>
         </div>
       </footer>
@@ -489,64 +517,66 @@
   }
 
   // FAQ State
-  const faqCategories = ['All', 'Getting Started', 'Controls', 'Saves & Tech', 'Performance'];
+  const faqCategories = ['All', 'How to Play', 'Multiplayer', 'Emulation & Tech', 'Android & Devices'];
   const selectedFaqCategory = ref('All');
   const faqSearchQuery = ref('');
   const openFaqMap = ref<Record<string, boolean>>({
-    'start-1': true,
-    'ctrl-1': true,
-    'save-1': true,
-    'compat-1': true,
+    'how-1': true,
+    'can-1': true,
+    'multi-1': true,
+    'hl2-1': true,
+    'emu-1': true,
+    'droid-1': true,
   });
 
   const faqData = [
     {
-      id: 'start-1',
-      category: 'Getting Started',
-      q: 'How do I play Half-Life: Uplink directly in my web browser?',
-      a: 'Simply click the "START GAME" button at the top of the page. The WebAssembly engine files and Half-Life: Uplink game archive will be downloaded and decompressed directly into your browser’s virtual memory. No installations, plugins, or software downloads are required.',
+      id: 'how-1',
+      category: 'How to Play',
+      q: 'How to play Half-Life in browser without downloading anything?',
+      a: 'To play Half-Life online in your web browser, click the "START GAME" or "LAUNCH HALF-LIFE NOW" button. The WebAssembly engine compiles and unpacks the game files directly into your browser’s virtual memory in seconds. No Steam client, no installer, and no external plugins are required.',
     },
     {
-      id: 'ctrl-1',
-      category: 'Controls',
-      q: 'Does it support full mouse-look and keyboard controls?',
-      a: 'Yes! The game features full Pointer Lock support. Once the game boots, clicking inside the window captures your mouse for 360-degree free-look. You can use standard WASD movement, Space to jump, Ctrl to crouch, E to interact, and R to reload.',
+      id: 'can-1',
+      category: 'How to Play',
+      q: 'Can you play Half-Life in browser with full keyboard and mouse controls?',
+      a: 'Yes! WebXash includes native HTML5 Pointer Lock support. Once launched, clicking the canvas locks your mouse cursor for authentic 360-degree free-look. You can use standard WASD for movement, Left Click to fire, Right Click for alternate fire, Space to jump, Ctrl to crouch, E to use items, and R to reload.',
+    },
+    {
+      id: 'multi-1',
+      category: 'Multiplayer',
+      q: 'How to play Half-Life online with friends / Half-Life multiplayer?',
+      a: 'Half-Life multiplayer works through WebSocket proxy networking. You can open the developer console with ~ (Tilde) and connect to custom deathmatch servers using the "connect <server_address>" command or host a LAN game with peers.',
+    },
+    {
+      id: 'hl2-1',
+      category: 'How to Play',
+      q: 'How to play Half-Life 2 in browser vs Half-Life 1?',
+      a: 'Half-Life 1 (GoldSource) is fully optimized for direct in-browser WebAssembly execution at 60+ FPS on WebXash. Half-Life 2 is built on the modern Source Engine with Havok physics, which is typically played via Steam or local installations, while Half-Life 1 and Uplink run instantly right here in your browser.',
+    },
+    {
+      id: 'emu-1',
+      category: 'Emulation & Tech',
+      q: 'What is the Half-Life online emulator and how does it work?',
+      a: 'The Half-Life browser emulator is powered by Xash3D FWGS compiled to WebAssembly (WASM) with WebGL 2.0 graphics pipeline and Web Audio API. It executes authentic C/C++ engine routines at near-native CPU speeds directly on your graphics card.',
+    },
+    {
+      id: 'droid-1',
+      category: 'Android & Devices',
+      q: 'Can you play Half-Life 1 online on Android or is an APK required?',
+      a: 'You can play directly in Chrome or Firefox on Android without downloading an APK file. WebXash automatically supports mobile touch controls and on-screen virtual joypads, while desktop users enjoy hardware mouse and keyboard controls.',
+    },
+    {
+      id: 'free-1',
+      category: 'How to Play',
+      q: 'Is Half-Life browser free to play?',
+      a: 'Yes! Playing Half-Life: Uplink online through WebXash is 100% free with no registration, no subscription, and no hidden fees.',
     },
     {
       id: 'save-1',
-      category: 'Saves & Tech',
-      q: 'Are my save games and configurations preserved between sessions?',
-      a: 'Yes. Save games created via the in-game menu or quicksave (F6) and your custom binds in config.cfg are persisted in your browser’s IndexedDB storage. As long as you do not clear your browser data, your progress will remain intact.',
-    },
-    {
-      id: 'compat-1',
-      category: 'Getting Started',
-      q: 'Which web browsers and platforms are supported?',
-      a: 'Any modern browser with WebGL 2.0 and WebAssembly capabilities is fully supported, including Google Chrome, Mozilla Firefox, Microsoft Edge, Apple Safari, Opera, and Brave on Windows, macOS, Linux, and ChromeOS.',
-    },
-    {
-      id: 'lore-1',
-      category: 'Getting Started',
-      q: 'What is the difference between Half-Life and Half-Life: Uplink?',
-      a: 'Half-Life: Uplink was a standalone demo chapter released by Valve in February 1999. It showcases distinct, original levels cut from the main game during production, presenting a standalone scenario where Gordon Freeman must transmit a critical distress signal.',
-    },
-    {
-      id: 'ctrl-2',
-      category: 'Controls',
-      q: 'How do I enable cheats or developer console?',
-      a: 'The engine features full GoldSource console access. You can open the developer console using the Tilde key (~) and enter commands such as "god", "noclip", "give item_healthkit", or "fps_max 144".',
-    },
-    {
-      id: 'perf-1',
-      category: 'Performance',
-      q: 'Why does the engine perform so smoothly in the browser?',
-      a: 'WebXash is powered by Xash3D FWGS, a specialized recreation of the GoldSource engine compiled to WebAssembly. By compiling C code directly into high-performance WASM bytecode with direct WebGL 2 shader bindings, it runs at 60+ FPS with hardware GPU acceleration.',
-    },
-    {
-      id: 'save-2',
-      category: 'Saves & Tech',
-      q: 'Can I import my own custom GoldSource maps or mods?',
-      a: 'Yes! The engine supports mounting custom .bsp maps and GoldSource PAK/ZIP files through WebAssembly file system wrappers.',
+      category: 'Emulation & Tech',
+      q: 'Are my save games and custom keybinds saved in the browser?',
+      a: 'Yes. In-game saves, quicksaves (F6), and custom binds configured in config.cfg are securely preserved in your browser’s IndexedDB local database so you can resume your campaign anytime.',
     },
   ];
 
@@ -749,7 +779,23 @@
     }
   };
 
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, left: 0, behavior: 'smooth' });
+    if (window.location.hash) {
+      history.replaceState(null, '', window.location.pathname + window.location.search);
+    }
+  };
+
   onMounted(() => {
+    // Prevent browser auto-scroll restoration on refresh/load so the site always opens at the top
+    if ('scrollRestoration' in history) {
+      history.scrollRestoration = 'manual';
+    }
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+    requestAnimationFrame(() => {
+      window.scrollTo(0, 0);
+    });
+
     const canvas = particleCanvas.value;
     if (!canvas) return;
     const ctx = canvas.getContext('2d');
@@ -765,19 +811,19 @@
       'rgba(56, 189, 248,',
     ];
 
-    const particleCount = Math.min(Math.floor((width * height) / 18000), 45);
+    const particleCount = Math.min(Math.floor((width * height) / 20000), 36);
     const particles: Particle[] = [];
 
     for (let i = 0; i < particleCount; i++) {
       particles.push({
         x: Math.random() * width,
         y: Math.random() * height,
-        vx: (Math.random() - 0.5) * 0.3,
-        vy: (Math.random() - 0.5) * 0.3 - 0.08,
-        size: Math.random() * 1.8 + 0.8,
-        baseAlpha: Math.random() * 0.3 + 0.15,
-        alpha: 0.2,
-        pulseSpeed: Math.random() * 0.02 + 0.008,
+        vx: (Math.random() - 0.5) * 0.25,
+        vy: (Math.random() - 0.5) * 0.25 - 0.05,
+        size: Math.random() * 1.5 + 0.8,
+        baseAlpha: Math.random() * 0.25 + 0.1,
+        alpha: 0.15,
+        pulseSpeed: Math.random() * 0.015 + 0.008,
         pulseOffset: Math.random() * Math.PI * 2,
         color: colors[Math.floor(Math.random() * colors.length)],
       });
@@ -805,7 +851,7 @@
         if (p.y > height) p.y = 0;
 
         const pulse = Math.sin(time * 1.5 + p.pulseOffset);
-        p.alpha = Math.max(0.05, p.baseAlpha + pulse * 0.1);
+        p.alpha = Math.max(0.04, p.baseAlpha + pulse * 0.08);
 
         ctx.fillStyle = `${p.color} ${p.alpha})`;
         ctx.beginPath();
@@ -827,18 +873,24 @@
 </script>
 
 <style scoped>
-  /* Root Container */
+  /* Base Typography & Color Palette */
   .page-container {
     position: relative;
     width: 100%;
     min-height: 100vh;
-    background: #0a0e17;
-    color: #f3f4f6;
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    background-color: #0b0f19;
+    background-image: 
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(245, 158, 11, 0.07), transparent),
+      radial-gradient(circle at 100% 100%, rgba(14, 165, 233, 0.03), transparent);
+    color: #e2e8f0;
+    font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
     overflow-x: hidden;
+    line-height: 1.6;
   }
 
-  /* Ambient Particle Canvas */
+  /* Ambient Canvas Background */
   .particles-canvas {
     position: fixed;
     inset: 0;
@@ -846,7 +898,7 @@
     height: 100%;
     pointer-events: none;
     z-index: 1;
-    opacity: 0.5;
+    opacity: 0.4;
   }
 
   /* TOP STICKY NAVIGATION BAR */
@@ -854,56 +906,61 @@
     position: sticky;
     top: 0;
     z-index: 40;
-    background: rgba(10, 14, 23, 0.88);
-    backdrop-filter: blur(16px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    background: rgba(11, 15, 25, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.25);
   }
 
   .nav-inner {
-    max-width: 1120px;
+    max-width: 1140px;
     margin: 0 auto;
-    padding: 10px 24px;
+    padding: 12px 24px;
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 16px;
+    gap: 20px;
   }
 
   .nav-brand {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 12px;
     text-decoration: none;
     color: inherit;
     flex-shrink: 0;
   }
 
   .nav-lambda-glyph {
-    width: 32px;
-    height: 32px;
+    width: 34px;
+    height: 34px;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #111827;
-    border: 1px solid #f59e0b;
-    border-radius: 6px;
+    border: 1.5px solid #f59e0b;
+    border-radius: 8px;
     color: #f59e0b;
     font-family: Georgia, serif;
     font-weight: 900;
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1;
+    box-shadow: 0 0 12px rgba(245, 158, 11, 0.15);
   }
 
   .nav-brand-text {
     display: flex;
     flex-direction: column;
+    gap: 1px;
   }
 
   .nav-title {
-    font-size: 13px;
+    font-size: 13.5px;
     font-weight: 800;
-    letter-spacing: 0.05em;
+    letter-spacing: 0.06em;
     color: #ffffff;
+    line-height: 1.1;
   }
 
   .nav-tag {
@@ -916,26 +973,26 @@
   .nav-links {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 4px;
     background: rgba(255, 255, 255, 0.03);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    padding: 3px 6px;
+    padding: 4px 6px;
     border-radius: 8px;
   }
 
   .nav-link {
     font-size: 13px;
     font-weight: 600;
-    color: #9ca3af;
+    color: #94a3b8;
     text-decoration: none;
-    padding: 6px 12px;
+    padding: 6px 14px;
     border-radius: 6px;
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-link:hover {
     color: #ffffff;
-    background: rgba(255, 255, 255, 0.06);
+    background: rgba(255, 255, 255, 0.07);
   }
 
   .nav-actions {
@@ -947,16 +1004,16 @@
   .nav-icon-btn {
     display: inline-flex;
     align-items: center;
-    gap: 6px;
-    padding: 7px 12px;
+    gap: 7px;
+    padding: 8px 14px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 6px;
-    color: #d1d5db;
+    color: #cbd5e1;
     font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .nav-icon-btn:hover {
@@ -974,21 +1031,23 @@
     display: inline-flex;
     align-items: center;
     gap: 8px;
-    padding: 8px 16px;
+    padding: 8px 18px;
     background: #f59e0b;
     color: #0f172a;
     border: none;
     border-radius: 6px;
     font-size: 12.5px;
     font-weight: 800;
-    letter-spacing: 0.03em;
+    letter-spacing: 0.04em;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 2px 10px rgba(245, 158, 11, 0.25);
   }
 
   .nav-launch-btn:hover {
     background: #fbbf24;
     transform: translateY(-1px);
+    box-shadow: 0 4px 14px rgba(245, 158, 11, 0.35);
   }
 
   .nav-play-icon {
@@ -1000,12 +1059,12 @@
   .content-wrapper {
     position: relative;
     z-index: 2;
-    max-width: 980px;
+    max-width: 1020px;
     margin: 0 auto;
-    padding: 40px 20px 80px;
+    padding: 48px 24px 88px;
     display: flex;
     flex-direction: column;
-    gap: 56px;
+    gap: 64px;
   }
 
   /* HERO / LAUNCHER SECTION */
@@ -1016,37 +1075,42 @@
 
   .launch-card {
     width: 100%;
-    max-width: 580px;
+    max-width: 600px;
     background: rgba(17, 24, 39, 0.85);
-    backdrop-filter: blur(16px);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 12px;
-    padding: 32px 28px;
+    border-radius: 14px;
+    padding: 34px 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
+    box-shadow: 
+      0 20px 50px rgba(0, 0, 0, 0.5),
+      0 0 0 1px rgba(245, 158, 11, 0.08);
   }
 
   .card-header {
     display: flex;
     align-items: center;
-    gap: 16px;
+    gap: 18px;
   }
 
   .lambda-badge {
-    width: 52px;
-    height: 52px;
+    width: 56px;
+    height: 56px;
     flex-shrink: 0;
     display: flex;
     align-items: center;
     justify-content: center;
     background: #111827;
     border: 1.5px solid #f59e0b;
-    border-radius: 10px;
+    border-radius: 12px;
+    box-shadow: 0 0 16px rgba(245, 158, 11, 0.2);
   }
 
   .lambda-char {
-    font-size: 32px;
+    font-size: 34px;
     font-weight: 900;
     color: #f59e0b;
     font-family: Georgia, serif;
@@ -1062,7 +1126,7 @@
   .status-indicator {
     display: flex;
     align-items: center;
-    gap: 6px;
+    gap: 7px;
   }
 
   .status-dot {
@@ -1070,28 +1134,30 @@
     height: 6px;
     border-radius: 50%;
     background: #10b981;
-    box-shadow: 0 0 6px #10b981;
+    box-shadow: 0 0 8px #10b981;
   }
 
   .status-text {
     font-size: 10px;
-    font-weight: 700;
-    letter-spacing: 0.08em;
+    font-weight: 800;
+    letter-spacing: 0.09em;
     color: #10b981;
   }
 
   .game-title {
     margin: 0;
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
-    letter-spacing: 0.02em;
+    letter-spacing: 0.01em;
     color: #ffffff;
+    line-height: 1.2;
   }
 
   .game-subtitle {
     margin: 0;
-    font-size: 13px;
-    color: #9ca3af;
+    font-size: 13.5px;
+    color: #94a3b8;
+    line-height: 1.4;
   }
 
   .tags-row {
@@ -1101,13 +1167,14 @@
   }
 
   .tag-pill {
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 600;
-    padding: 4px 10px;
+    padding: 5px 11px;
     border-radius: 6px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    color: #d1d5db;
+    color: #cbd5e1;
+    letter-spacing: 0.01em;
   }
 
   .primary-launch-btn {
@@ -1116,7 +1183,7 @@
     justify-content: center;
     gap: 10px;
     width: 100%;
-    padding: 15px 24px;
+    padding: 16px 24px;
     background: #f59e0b;
     color: #0f172a;
     border: none;
@@ -1125,12 +1192,14 @@
     font-weight: 800;
     letter-spacing: 0.04em;
     cursor: pointer;
-    transition: all 0.15s ease;
+    transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 18px rgba(245, 158, 11, 0.3);
   }
 
   .primary-launch-btn:hover {
     background: #fbbf24;
     transform: translateY(-1px);
+    box-shadow: 0 6px 22px rgba(245, 158, 11, 0.4);
   }
 
   .primary-launch-btn-small {
@@ -1138,7 +1207,7 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 10px 18px;
+    padding: 10px 20px;
     background: #f59e0b;
     color: #0f172a;
     border: none;
@@ -1161,55 +1230,68 @@
 
   .controls-box {
     background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 16px;
+    border: 1px solid rgba(255, 255, 255, 0.07);
+    border-radius: 10px;
+    padding: 18px;
   }
 
   .controls-header {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin-bottom: 12px;
+    margin-bottom: 14px;
   }
 
   .controls-title {
     font-size: 11px;
-    font-weight: 700;
+    font-weight: 800;
     letter-spacing: 0.08em;
-    color: #9ca3af;
+    color: #94a3b8;
   }
 
   .controls-hint {
-    font-size: 10px;
-    font-weight: 600;
+    font-size: 10.5px;
+    font-weight: 700;
     letter-spacing: 0.06em;
-    color: #6b7280;
+    color: #64748b;
   }
 
   .controls-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
-    gap: 10px 16px;
+    gap: 12px 18px;
   }
 
   .control-item {
     display: flex;
     align-items: center;
-    gap: 6px;
-    font-size: 12px;
-    color: #d1d5db;
+    gap: 8px;
+  }
+
+  .kbd-cluster {
+    display: flex;
+    align-items: center;
+    gap: 4px;
   }
 
   kbd {
-    background: #1f2937;
-    border: 1px solid #374151;
+    display: inline-block;
+    background: #1e293b;
+    border: 1px solid #334155;
     border-radius: 4px;
-    padding: 2px 6px;
+    padding: 2px 7px;
     font-size: 11px;
-    font-family: ui-monospace, monospace;
+    font-family: 'JetBrains Mono', ui-monospace, monospace;
     font-weight: 700;
     color: #fbbf24;
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+    line-height: 1.4;
+  }
+
+  .control-label {
+    font-size: 12.5px;
+    color: #cbd5e1;
+    font-weight: 500;
   }
 
   .actions-row {
@@ -1223,11 +1305,11 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    padding: 9px 16px;
+    padding: 10px 16px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
-    color: #9ca3af;
+    color: #94a3b8;
     font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
@@ -1245,29 +1327,30 @@
     height: 15px;
   }
 
-  /* Section Scroll Margins */
+  /* Section Scroll Offsets */
+  #home,
   #game-launcher,
   #article-guide,
   #weapons-guide,
   #faq-section,
   #community-comments {
-    scroll-margin-top: 72px;
+    scroll-margin-top: 76px;
   }
 
   /* SEO ARTICLE SECTION */
   .seo-article {
-    background: rgba(17, 24, 39, 0.6);
+    background: rgba(17, 24, 39, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 36px 32px;
-    line-height: 1.65;
-    color: #d1d5db;
+    border-radius: 14px;
+    padding: 42px 36px;
+    line-height: 1.7;
+    color: #cbd5e1;
   }
 
   .article-header {
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-    padding-bottom: 24px;
-    margin-bottom: 28px;
+    padding-bottom: 26px;
+    margin-bottom: 32px;
   }
 
   .article-meta-badge {
@@ -1276,113 +1359,118 @@
     font-weight: 800;
     color: #f59e0b;
     letter-spacing: 0.1em;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .article-main-title {
-    font-size: 26px;
+    font-size: 28px;
     font-weight: 800;
     color: #ffffff;
     line-height: 1.3;
-    margin: 0 0 14px 0;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.01em;
   }
 
   .article-lead {
-    font-size: 15px;
-    color: #9ca3af;
+    font-size: 15.5px;
+    color: #94a3b8;
     margin: 0;
+    line-height: 1.6;
   }
 
   .article-section {
-    margin-bottom: 36px;
+    margin-bottom: 40px;
   }
 
   .section-title {
-    font-size: 19px;
+    font-size: 20px;
     font-weight: 700;
-    color: #f3f4f6;
-    margin: 0 0 14px 0;
+    color: #f8fafc;
+    margin: 0 0 16px 0;
+    letter-spacing: -0.01em;
   }
 
   .callout-box {
     display: flex;
     gap: 14px;
-    background: rgba(245, 158, 11, 0.06);
+    background: rgba(245, 158, 11, 0.05);
     border: 1px solid rgba(245, 158, 11, 0.2);
     border-left: 3px solid #f59e0b;
-    border-radius: 6px;
-    padding: 16px;
-    margin: 18px 0;
+    border-radius: 8px;
+    padding: 18px;
+    margin: 20px 0;
   }
 
   .callout-icon {
-    font-size: 18px;
+    font-size: 20px;
     flex-shrink: 0;
   }
 
   .callout-text {
-    font-size: 13.5px;
-    color: #e5e7eb;
+    font-size: 14px;
+    color: #e2e8f0;
+    line-height: 1.6;
   }
 
   .tech-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-    gap: 14px;
-    margin-top: 18px;
+    grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+    gap: 16px;
+    margin-top: 20px;
   }
 
   .tech-card {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 18px 16px;
+    border-radius: 10px;
+    padding: 20px 18px;
   }
 
   .tech-icon {
-    font-size: 22px;
-    margin-bottom: 6px;
+    font-size: 24px;
+    margin-bottom: 8px;
   }
 
   .tech-card h4 {
     margin: 0 0 6px 0;
-    font-size: 14px;
+    font-size: 14.5px;
     color: #ffffff;
     font-weight: 700;
   }
 
   .tech-card p {
     margin: 0;
-    font-size: 12.5px;
-    color: #9ca3af;
+    font-size: 13px;
+    color: #94a3b8;
     line-height: 1.5;
   }
 
   /* Weapons Table */
   .table-container {
     overflow-x: auto;
-    margin: 18px 0;
-    border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
+    margin: 20px 0;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 10px;
   }
 
   .weapons-table {
     width: 100%;
     border-collapse: collapse;
-    font-size: 13px;
+    font-size: 13.5px;
     text-align: left;
   }
 
   .weapons-table th {
-    background: #1f2937;
+    background: #1a2234;
     color: #f59e0b;
-    padding: 11px 14px;
+    padding: 13px 16px;
     font-weight: 700;
     border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    letter-spacing: 0.02em;
   }
 
   .weapons-table td {
-    padding: 11px 14px;
+    padding: 13px 16px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.04);
   }
 
@@ -1398,20 +1486,20 @@
   .specs-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 14px;
+    gap: 18px;
+    margin-top: 16px;
   }
 
   .specs-col {
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.35);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 18px;
+    border-radius: 10px;
+    padding: 20px;
   }
 
   .specs-heading {
-    margin: 0 0 12px 0;
-    font-size: 14px;
+    margin: 0 0 14px 0;
+    font-size: 14.5px;
     color: #f59e0b;
     font-weight: 700;
   }
@@ -1419,22 +1507,37 @@
   .specs-list {
     margin: 0;
     padding-left: 18px;
-    font-size: 13px;
-    color: #d1d5db;
+    font-size: 13.5px;
+    color: #cbd5e1;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    gap: 9px;
+  }
+
+  .steps-list {
+    margin: 16px 0;
+    padding-left: 20px;
+    font-size: 14.5px;
+    color: #e2e8f0;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    line-height: 1.6;
+  }
+
+  .steps-list li strong {
+    color: #f59e0b;
   }
 
   /* FAQ SECTION */
   .faq-container {
-    background: rgba(17, 24, 39, 0.6);
+    background: rgba(17, 24, 39, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 36px 32px;
+    border-radius: 14px;
+    padding: 40px 36px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
   }
 
   .faq-toolbar {
@@ -1442,8 +1545,8 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 10px;
-    margin-bottom: 14px;
+    gap: 12px;
+    margin-bottom: 16px;
   }
 
   .faq-categories {
@@ -1454,12 +1557,12 @@
   }
 
   .faq-cat-btn {
-    padding: 5px 12px;
+    padding: 6px 14px;
     background: rgba(255, 255, 255, 0.04);
     border: 1px solid rgba(255, 255, 255, 0.08);
     border-radius: 6px;
-    color: #9ca3af;
-    font-size: 12px;
+    color: #94a3b8;
+    font-size: 12.5px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
@@ -1478,12 +1581,12 @@
   }
 
   .faq-expand-all-btn {
-    padding: 5px 12px;
+    padding: 6px 14px;
     background: transparent;
-    border: 1px solid rgba(245, 158, 11, 0.3);
+    border: 1px solid rgba(245, 158, 11, 0.35);
     border-radius: 6px;
     color: #f59e0b;
-    font-size: 12px;
+    font-size: 12.5px;
     font-weight: 700;
     cursor: pointer;
     transition: all 0.15s ease;
@@ -1496,15 +1599,15 @@
   .faq-q-title-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
   .faq-cat-tag {
-    font-size: 9.5px;
+    font-size: 10px;
     font-weight: 700;
     text-transform: uppercase;
-    padding: 2px 6px;
+    padding: 2px 7px;
     background: rgba(245, 158, 11, 0.12);
     border: 1px solid rgba(245, 158, 11, 0.25);
     color: #f59e0b;
@@ -1521,51 +1624,53 @@
   }
 
   .section-main-heading {
-    font-size: 22px;
+    font-size: 24px;
     font-weight: 800;
     color: #ffffff;
     margin: 0 0 6px 0;
+    letter-spacing: -0.01em;
   }
 
   .section-sub-heading {
-    font-size: 13.5px;
-    color: #9ca3af;
-    margin: 0 0 16px 0;
+    font-size: 14px;
+    color: #94a3b8;
+    margin: 0 0 18px 0;
   }
 
   .faq-search-input {
     width: 100%;
-    padding: 11px 16px;
+    padding: 12px 18px;
     background: #111827;
     border: 1px solid rgba(255, 255, 255, 0.1);
     border-radius: 8px;
     color: #ffffff;
-    font-size: 13.5px;
+    font-size: 14px;
     outline: none;
-    transition: border-color 0.15s ease;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
 
   .faq-search-input:focus {
     border-color: #f59e0b;
+    box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.15);
   }
 
   .faq-list {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .faq-card {
     background: rgba(17, 24, 39, 0.7);
     border: 1px solid rgba(255, 255, 255, 0.06);
-    border-radius: 8px;
-    padding: 16px 18px;
+    border-radius: 10px;
+    padding: 18px 20px;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .faq-card:hover {
-    border-color: rgba(245, 158, 11, 0.25);
+    border-color: rgba(245, 158, 11, 0.3);
   }
 
   .faq-card--open {
@@ -1577,12 +1682,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    gap: 12px;
+    gap: 14px;
   }
 
   .faq-question {
     margin: 0;
-    font-size: 14.5px;
+    font-size: 15px;
     font-weight: 700;
     color: #ffffff;
   }
@@ -1594,12 +1699,12 @@
   }
 
   .faq-answer-row {
-    margin-top: 10px;
-    padding-top: 10px;
-    border-top: 1px solid rgba(255, 255, 255, 0.05);
-    font-size: 13.5px;
-    color: #9ca3af;
-    line-height: 1.55;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px solid rgba(255, 255, 255, 0.06);
+    font-size: 14px;
+    color: #94a3b8;
+    line-height: 1.6;
   }
 
   .faq-answer-row p {
@@ -1610,17 +1715,17 @@
   .comments-section {
     display: flex;
     flex-direction: column;
-    gap: 16px;
+    gap: 18px;
   }
 
   .disqus-wrapper {
-    background: rgba(17, 24, 39, 0.6);
+    background: rgba(17, 24, 39, 0.65);
     border: 1px solid rgba(255, 255, 255, 0.08);
-    border-radius: 12px;
-    padding: 28px;
+    border-radius: 14px;
+    padding: 32px 30px;
     display: flex;
     flex-direction: column;
-    gap: 20px;
+    gap: 22px;
   }
 
   .disqus-controls-bar {
@@ -1628,56 +1733,56 @@
     align-items: center;
     justify-content: space-between;
     flex-wrap: wrap;
-    gap: 12px;
-    padding-bottom: 16px;
+    gap: 14px;
+    padding-bottom: 18px;
     border-bottom: 1px solid rgba(255, 255, 255, 0.06);
   }
 
   .disqus-config-group {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     flex-wrap: wrap;
   }
 
   .disqus-label {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
-    color: #d1d5db;
+    color: #cbd5e1;
   }
 
   .disqus-input {
-    padding: 7px 12px;
+    padding: 8px 14px;
     background: #0f172a;
-    border: 1px solid #374151;
+    border: 1px solid #334155;
     border-radius: 6px;
     color: #ffffff;
-    font-size: 12.5px;
+    font-size: 13px;
   }
 
   .disqus-load-btn {
-    padding: 7px 14px;
-    background: #374151;
+    padding: 8px 16px;
+    background: #334155;
     color: #ffffff;
-    border: 1px solid #4b5563;
+    border: 1px solid #475569;
     border-radius: 6px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 600;
     cursor: pointer;
     transition: all 0.15s ease;
   }
 
   .disqus-load-btn:hover {
-    background: #4b5563;
+    background: #475569;
   }
 
   .disqus-status-pill {
-    font-size: 11px;
+    font-size: 11.5px;
     font-weight: 700;
-    padding: 4px 8px;
+    padding: 4px 10px;
     border-radius: 6px;
-    background: #1f2937;
-    color: #9ca3af;
+    background: #1e293b;
+    color: #94a3b8;
   }
 
   .disqus-status-pill.connected {
@@ -1688,39 +1793,39 @@
 
   .disqus-placeholder {
     text-align: center;
-    padding: 32px 20px;
-    background: rgba(0, 0, 0, 0.2);
+    padding: 36px 20px;
+    background: rgba(0, 0, 0, 0.25);
     border: 1px dashed rgba(255, 255, 255, 0.12);
-    border-radius: 8px;
+    border-radius: 10px;
   }
 
   .disqus-placeholder-icon {
-    font-size: 28px;
-    margin-bottom: 6px;
+    font-size: 32px;
+    margin-bottom: 8px;
   }
 
   .disqus-placeholder h4 {
     margin: 0 0 6px 0;
-    font-size: 15px;
+    font-size: 16px;
     color: #ffffff;
   }
 
   .disqus-placeholder p {
     margin: 0;
-    font-size: 13px;
-    color: #9ca3af;
+    font-size: 13.5px;
+    color: #94a3b8;
   }
 
   /* Local Comments Feed */
   .local-comments-block {
-    background: rgba(0, 0, 0, 0.25);
-    border-radius: 8px;
-    padding: 18px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    padding: 22px;
   }
 
   .local-comments-title {
-    margin: 0 0 12px 0;
-    font-size: 13px;
+    margin: 0 0 14px 0;
+    font-size: 13.5px;
     font-weight: 700;
     color: #f59e0b;
     letter-spacing: 0.04em;
@@ -1728,41 +1833,42 @@
 
   .comment-input-row {
     display: flex;
-    gap: 8px;
-    margin-bottom: 16px;
+    gap: 10px;
+    margin-bottom: 18px;
     flex-wrap: wrap;
   }
 
   .comment-name-input {
-    width: 180px;
-    padding: 9px 12px;
+    width: 200px;
+    padding: 10px 14px;
     background: #111827;
-    border: 1px solid #374151;
+    border: 1px solid #334155;
     border-radius: 6px;
     color: #ffffff;
-    font-size: 12.5px;
+    font-size: 13px;
   }
 
   .comment-text-input {
     flex: 1;
-    min-width: 220px;
-    padding: 9px 12px;
+    min-width: 240px;
+    padding: 10px 14px;
     background: #111827;
-    border: 1px solid #374151;
+    border: 1px solid #334155;
     border-radius: 6px;
     color: #ffffff;
-    font-size: 12.5px;
+    font-size: 13px;
   }
 
   .comment-post-btn {
-    padding: 9px 18px;
+    padding: 10px 20px;
     background: #f59e0b;
     color: #0f172a;
     border: none;
     border-radius: 6px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     cursor: pointer;
+    transition: all 0.15s ease;
   }
 
   .comment-post-btn:hover {
@@ -1772,45 +1878,45 @@
   .comments-stream {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
   }
 
   .comment-bubble {
     background: #111827;
     border: 1px solid rgba(255, 255, 255, 0.05);
-    border-radius: 6px;
-    padding: 10px 14px;
+    border-radius: 8px;
+    padding: 12px 16px;
   }
 
   .comment-meta {
     display: flex;
     align-items: center;
-    gap: 8px;
-    margin-bottom: 3px;
+    gap: 10px;
+    margin-bottom: 4px;
   }
 
   .comment-author {
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 700;
     color: #ffffff;
   }
 
   .comment-time {
-    font-size: 11px;
-    color: #6b7280;
+    font-size: 11.5px;
+    color: #64748b;
   }
 
   .comment-body {
     margin: 0;
-    font-size: 13px;
-    color: #d1d5db;
-    line-height: 1.45;
+    font-size: 13.5px;
+    color: #cbd5e1;
+    line-height: 1.5;
   }
 
   /* FOOTER */
   .page-footer {
     border-top: 1px solid rgba(255, 255, 255, 0.08);
-    padding-top: 28px;
+    padding-top: 32px;
     text-align: center;
   }
 
@@ -1819,36 +1925,37 @@
     align-items: center;
     justify-content: center;
     gap: 8px;
-    font-size: 12.5px;
+    font-size: 13px;
     font-weight: 800;
     color: #f59e0b;
-    margin-bottom: 10px;
+    margin-bottom: 12px;
   }
 
   .footer-lambda {
-    font-size: 16px;
+    font-size: 17px;
     font-family: Georgia, serif;
   }
 
   .footer-disclaimer {
-    font-size: 11.5px;
-    color: #6b7280;
-    max-width: 640px;
-    margin: 0 auto 14px;
-    line-height: 1.55;
+    font-size: 12px;
+    color: #64748b;
+    max-width: 660px;
+    margin: 0 auto 16px;
+    line-height: 1.6;
   }
 
   .footer-links {
     display: flex;
     justify-content: center;
-    gap: 10px;
-    font-size: 12px;
-    color: #9ca3af;
+    gap: 12px;
+    font-size: 12.5px;
+    color: #94a3b8;
   }
 
   .footer-links a {
-    color: #9ca3af;
+    color: #94a3b8;
     text-decoration: none;
+    transition: color 0.15s ease;
   }
 
   .footer-links a:hover {
@@ -1858,29 +1965,29 @@
   /* TOAST NOTIFICATION */
   .simple-toast {
     position: fixed;
-    bottom: 24px;
+    bottom: 28px;
     left: 50%;
     transform: translateX(-50%);
-    background: #1f2937;
+    background: #1e293b;
     border: 1px solid #f59e0b;
     color: #ffffff;
-    padding: 9px 18px;
-    border-radius: 6px;
-    font-size: 12.5px;
+    padding: 10px 20px;
+    border-radius: 8px;
+    font-size: 13px;
     font-weight: 700;
-    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.7);
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.7);
     z-index: 999;
   }
 
   .simple-toast-enter-active,
   .simple-toast-leave-active {
-    transition: all 0.2s ease;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .simple-toast-enter-from,
   .simple-toast-leave-to {
     opacity: 0;
-    transform: translate(-50%, 10px);
+    transform: translate(-50%, 12px);
   }
 
   /* RESPONSIVE DESIGN */
@@ -1894,7 +2001,7 @@
     }
 
     .seo-article {
-      padding: 24px 18px;
+      padding: 28px 20px;
     }
 
     .specs-grid {
