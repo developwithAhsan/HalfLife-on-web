@@ -171,13 +171,33 @@ class XashLoader {
 
     const store = useXashStore();
 
+    const filesMap: Record<string, string> = {
+      'xash.wasm': xashURL,
+      'filesystem_stdio.wasm': filesystemURL,
+      'libmenu.wasm': menuURL,
+      'cl_dlls/menu_emscripten_wasm32.wasm': menuURL,
+      'cl_dlls/client_emscripten_wasm32.wasm': HLClientURL,
+      'dlls/hl_emscripten_wasm32.wasm': HLServerURL,
+      'dlls/bshift_emscripten_wasm32.wasm': HLServerURL,
+      'dlls/opfor_emscripten_wasm32.wasm': HLServerURL,
+      'dlls/cs_emscripten_wasm32.wasm': CSServerURL,
+      'dlls/mp_emscripten_wasm32.wasm': CSServerURL,
+      'libref_webgl2.wasm': webgl2URL,
+      'libref_gles3compat.wasm': webgl2URL,
+      'extras.pk3': extrasURL,
+    };
+
     const xash = new XashClass({
       multiplayerIP: store.multiplayerIP,
       onError: XashLoader.removeReloadListener,
+      filesMap,
       module: {
         arguments: options.launchArgs,
         locateFile: (path: string) => {
           const cleanPath = path.replace(/^(\.\/|\/)/, '');
+          if (filesMap[cleanPath]) {
+            return filesMap[cleanPath];
+          }
           if (cleanPath === 'xash.wasm' || cleanPath.endsWith('/xash.wasm')) {
             return xashURL;
           }

@@ -5,8 +5,10 @@
   "homepage": "https://x8bitrain.github.io/webXash",
   "type": "module",
   "scripts": {
+    "postinstall": "node scripts/prepare-assets.js",
+    "prebuild": "node scripts/prepare-assets.js",
     "dev": "vite --port 3000 --host 0.0.0.0",
-    "build": "vite build",
+    "build": "node scripts/prepare-assets.js && vite build",
     "preview": "vite preview --port 3000 --host 0.0.0.0",
     "lint": "eslint ."
   },

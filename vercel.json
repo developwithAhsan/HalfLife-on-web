@@ -1,10 +1,12 @@
 {
-  "buildCommand": "vite build",
+  "buildCommand": "node scripts/prepare-assets.js && vite build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "cleanUrls": false,
+  "trailingSlash": false,
   "rewrites": [
     {
-      "source": "/((?!assets/|hl/|cs16-client/|hlsdk-portable/|xash3d-fwgs/|favicon|.*\\..*).*)",
+      "source": "/((?!assets/|hl/|cs16-client/|hlsdk-portable/|xash3d-fwgs/|.*\\.[a-zA-Z0-9]+$).*)",
       "destination": "/index.html"
     }
   ],
@@ -19,6 +21,10 @@
         {
           "key": "Access-Control-Allow-Methods",
           "value": "GET, HEAD, OPTIONS"
+        },
+        {
+          "key": "Access-Control-Allow-Headers",
+          "value": "*"
         }
       ]
     },
@@ -45,6 +51,10 @@
         {
           "key": "Access-Control-Allow-Origin",
           "value": "*"
+        },
+        {
+          "key": "Accept-Ranges",
+          "value": "bytes"
         },
         {
           "key": "Cache-Control",
